@@ -1,6 +1,7 @@
 import fastify from "fastify";
 import cors from "@fastify/cors";
 import { connectDB } from "./config/db";
+import { Routes } from "./routes";
 
 export async function buildApp() {
   const app = fastify({ logger: true });
@@ -13,6 +14,8 @@ export async function buildApp() {
   });
 
   // Define routes here
+  app.register(Routes)
+  
   app.get("/ok", (req, res) => {
     res.send({ message: "Success" });
   });
