@@ -1,6 +1,7 @@
 import { DataSource } from "typeorm";
 import { config } from "dotenv";
-import { resolve } from "path";
+import path, { resolve } from "path";
+import { User } from "src/modules/user/user.entity";
 
 config();
 
@@ -13,12 +14,13 @@ export const AppDataSource = new DataSource({
   database: "beauty_store",
   synchronize: true,
   logging: false,
-  entities: [resolve(__dirname, "../modules/**/*.entity.{.ts,.js}")],
+  entities: [path.join(__dirname, "..", "modules", "**" ,"*.entity.ts")],
 });
 
 export const connectDB = async () => {
   try {
     await AppDataSource.initialize();
+    
     console.log("🗄️ Database connected successfully");
   } catch (err) {
     console.error("❌ Error connecting to DB:", err);
